@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>High-Quality Audio/Video Recorder</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-video"></i> Professional A/V Recorder</h1>
+            <p>Record highest quality audio and video with advanced settings</p>
+        </header>
+
+        <main>
+            <!-- Recording Controls -->
+            <section class="recording-section">
+                <div class="preview-container">
+                    <video id="preview" autoplay muted playsinline></video>
+                    <canvas id="previewCanvas" style="display: none;"></canvas>
+                    <div class="recording-indicator" id="recordingIndicator">
+                        <i class="fas fa-circle"></i>
+                        <span>REC</span>
+                        <div class="timer" id="timer">00:00:00</div>
+                    </div>
+                    <div class="enhancement-indicator" id="enhancementIndicator">
+                        <i class="fas fa-moon"></i>
+                        <span>LOW LIGHT ENHANCED</span>
+                    </div>
+                    <div class="preview-placeholder" id="previewPlaceholder">
+                        <i class="fas fa-video"></i>
+                        <p>Click "Start Preview" to see camera feed</p>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <button id="previewBtn" class="btn btn-preview" title="Start/Stop Preview">
+                        <i class="fas fa-eye"></i>
+                        Start Preview
+                    </button>
+                    <button id="startBtn" class="btn btn-start" disabled title="Start Recording">
+                        <i class="fas fa-play"></i>
+                        Start Recording
+                    </button>
+                    <button id="pauseBtn" class="btn btn-pause" disabled title="Pause Recording">
+                        <i class="fas fa-pause"></i>
+                        Pause
+                    </button>
+                    <button id="stopBtn" class="btn btn-stop" disabled title="Stop Recording">
+                        <i class="fas fa-stop"></i>
+                        Stop
+                    </button>
+                    <button id="downloadBtn" class="btn btn-download" disabled title="Download Recording">
+                        <i class="fas fa-download"></i>
+                        Download
+                    </button>
+                </div>
+
+                <!-- Recording Mode Selection -->
+                <div class="mode-selection">
+                    <label class="mode-option">
+                        <input type="radio" name="recordingMode" value="video" checked>
+                        <span><i class="fas fa-video"></i> Video + Audio</span>
+                    </label>
+                    <label class="mode-option">
+                        <input type="radio" name="recordingMode" value="audio">
+                        <span><i class="fas fa-microphone"></i> Audio Only</span>
+                    </label>
+                    <label class="mode-option">
+                        <input type="radio" name="recordingMode" value="screen">
+                        <span><i class="fas fa-desktop"></i> Screen + Audio</span>
+                    </label>
+                </div>
+            </section>
+
+            <!-- Quality Settings -->
+            <section class="settings-section">
+                <h3><i class="fas fa-cog"></i> Quality Settings</h3>
+                
+                <div class="settings-grid">
+                    <!-- Video Settings -->
+                    <div class="setting-group">
+                        <h4>Video Quality</h4>
+                        <div class="setting-item">
+                            <label for="videoResolution">Resolution:</label>
+                            <select id="videoResolution">
+                                <option value="4K">4K (3840×2160)</option>
+                                <option value="1440p">1440p (2560×1440)</option>
+                                <option value="1080p" selected>1080p (1920×1080)</option>
+                                <option value="720p">720p (1280×720)</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label for="videoFramerate">Frame Rate:</label>
+                            <select id="videoFramerate">
+                                <option value="60">60 fps</option>
+                                <option value="30" selected>30 fps</option>
+                                <option value="24">24 fps</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label for="videoBitrate">Bitrate (Mbps):</label>
+                            <input type="range" id="videoBitrate" min="1" max="50" value="8" step="1">
+                            <span id="videoBitrateValue">8</span>
+                        </div>
+                    </div>
+
+                    <!-- Low Light Enhancement -->
+                    <div class="setting-group">
+                        <h4><i class="fas fa-moon"></i> Low Light Enhancement</h4>
+                        <div class="setting-item">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="lowLightMode">
+                                <span class="toggle-slider"></span>
+                                Enable Low Light Mode
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label for="exposureMode">Exposure Mode:</label>
+                            <select id="exposureMode">
+                                <option value="continuous">Auto (Continuous)</option>
+                                <option value="single-shot">Single Shot</option>
+                                <option value="none">Manual</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label for="exposureCompensation">Exposure (+/-):</label>
+                            <input type="range" id="exposureCompensation" min="-3" max="3" value="0" step="0.5">
+                            <span id="exposureValue">0</span>
+                        </div>
+                        <div class="setting-item">
+                            <label for="whiteBalanceMode">White Balance:</label>
+                            <select id="whiteBalanceMode">
+                                <option value="continuous">Auto</option>
+                                <option value="single-shot">Single Shot</option>
+                                <option value="none">Manual</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label for="iso">ISO:</label>
+                            <select id="iso">
+                                <option value="auto" selected>Auto</option>
+                                <option value="100">100</option>
+                                <option value="200">200</option>
+                                <option value="400">400</option>
+                                <option value="800">800</option>
+                                <option value="1600">1600</option>
+                                <option value="3200">3200</option>
+                                <option value="6400">6400</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="nightMode">
+                                <span class="toggle-slider"></span>
+                                Night Mode Boost
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="noiseReduction" checked>
+                                <span class="toggle-slider"></span>
+                                Noise Reduction
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Audio Settings -->
+                    <div class="setting-group">
+                        <h4>Audio Quality</h4>
+                        <div class="setting-item">
+                            <label for="audioSampleRate">Sample Rate:</label>
+                            <select id="audioSampleRate">
+                                <option value="48000" selected>48 kHz</option>
+                                <option value="44100">44.1 kHz</option>
+                                <option value="22050">22 kHz</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label for="audioChannels">Channels:</label>
+                            <select id="audioChannels">
+                                <option value="2" selected>Stereo</option>
+                                <option value="1">Mono</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label for="audioBitrate">Bitrate (kbps):</label>
+                            <input type="range" id="audioBitrate" min="64" max="320" value="256" step="32">
+                            <span id="audioBitrateValue">256</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recordings List -->
+            <section class="recordings-section">
+                <h3><i class="fas fa-folder"></i> Recordings</h3>
+                <div id="recordingsList" class="recordings-list">
+                    <p class="empty-state">No recordings yet. Start recording to see them here!</p>
+                </div>
+            </section>
+        </main>
+
+        <!-- Status Messages -->
+        <div id="statusMessage" class="status-message"></div>
+    </div>
+
+    <script src="recorder.js"></script>
+</body>
+</html>
